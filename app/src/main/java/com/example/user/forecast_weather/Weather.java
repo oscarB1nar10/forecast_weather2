@@ -1,11 +1,13 @@
 package com.example.user.forecast_weather;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +29,7 @@ public class Weather extends AppCompatActivity {
     private TextView temp, day_information;
     private ImageView imageWeather;
 
-    UserLocation usl;
+    UserLocation2 usl;
 
 
 
@@ -41,8 +43,10 @@ public class Weather extends AppCompatActivity {
         temp=findViewById(R.id.temperature);
         day_information= findViewById(R.id.day_information);
         imageWeather=findViewById(R.id.image_weather);
-        usl=new UserLocation(this);
+
+        usl=new UserLocation2(this);
         findWeather();
+
     }
 
 
@@ -50,6 +54,7 @@ public class Weather extends AppCompatActivity {
     private void findWeather() {
         String latitude=""+usl.latitude;
         String longitud=""+usl.longitude;
+
 
         System.out.println("latitude: "+latitude+",longitude: "+longitud);
         String url="https://api.darksky.net/forecast/63978648924e466d3f85271c3b02c11b/"+latitude+","+longitud;
@@ -63,7 +68,7 @@ public class Weather extends AppCompatActivity {
                     double  temperature=mainObject.getDouble("temperature");
                     temperature=((temperature-32)*5)/9;
                     int ftem=(int)Math.round(temperature);
-                    temp.setText(ftem+"°");
+                    temp.setText(""+ftem+"°");
 
 
                     //zone, place and day details
