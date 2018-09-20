@@ -26,9 +26,11 @@ import java.util.Calendar;
 
 public class Weather extends AppCompatActivity {
 
-    private TextView temp, day_information;
+    private TextView temp, day_information, windSpeed, daySummary;
     private ImageView imageWeather;
 
+
+    int vw=0;
     UserLocation2 usl;
 
 
@@ -43,6 +45,8 @@ public class Weather extends AppCompatActivity {
         temp=findViewById(R.id.temperature);
         day_information= findViewById(R.id.day_information);
         imageWeather=findViewById(R.id.image_weather);
+        windSpeed=findViewById(R.id.wind_speed);
+        daySummary=findViewById(R.id.day_summary);
 
         usl=new UserLocation2(this);
         findWeather();
@@ -70,6 +74,7 @@ public class Weather extends AppCompatActivity {
                     int ftem=(int)Math.round(temperature);
                     temp.setText(""+ftem+"°");
 
+                    windSpeed.setText(""+((int)mainObject.getDouble("windSpeed")*1.852)+" K/H");
 
                     //zone, place and day details
                     Calendar calendar= Calendar.getInstance();
@@ -79,6 +84,9 @@ public class Weather extends AppCompatActivity {
 
                     //weather
                     imageWeather.setImageResource(evaluateTheWeather(mainObject.getString("icon")));
+
+                    String daySummarys=getDaySummary();
+                    daySummary.setText("Humidity: "+(mainObject.getDouble("humidity")*100)+"%"+"\n"+daySummarys);
 
                     /*DailyWeather dw=new DailyWeather(evaluateTheWeather(mainObject.getString("icon")),ftem,
                             response.getString("timezone")+"\n"+dayOfTheWeek+": "+dayNumber);
@@ -107,14 +115,34 @@ public class Weather extends AppCompatActivity {
 
 
         if(weatherExpression.contains("clear")){
+            vw=1;
             return R.drawable.clear;
         }else if(weatherExpression.contains("cloudy")){
+            vw=2;
             return  R.drawable.cloudy;
         }else{
+            vw=3;
             return R.drawable.rain;
         }
 
 
+    }
+
+    public  String getDaySummary(){
+        switch (vw){
+            case 1:{
+                return "Dia despejado";
+            }
+            case 2:{
+                return "Dia nublado";
+            }
+            case  3:{
+                return "Dia lluvioso";
+            }
+            default: {
+                return "Dia nublado";
+            }
+        }
     }
 
 }

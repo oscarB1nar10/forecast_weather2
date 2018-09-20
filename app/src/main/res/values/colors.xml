@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="current_time_color">#681e1c1d</color>
     <color name="temperature_color">#e5f9f3f6</color>
+    <color name="current_day_style_color">#e5f20404</color>
 </resources>

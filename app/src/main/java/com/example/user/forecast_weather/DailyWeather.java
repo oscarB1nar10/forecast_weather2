@@ -153,13 +153,18 @@ public class DailyWeather extends Fragment{
 
                 //zone, place and day details
                 //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String summary=jsonArray.getJSONObject(i).getString("summary");
+                System.out.println("summary: "+summary);
+
                 Calendar calendar= Calendar.getInstance();
                 calendar.add(Calendar.DATE,accumulator);
+
+                String dayNumber  = (String) DateFormat.format("dd",   calendar); // day number
                 String dayOfTheWeek = (String) DateFormat.format("EEEE",calendar); // day
 
-                days[accumulator].setText(""+dayOfTheWeek);
+                days[accumulator].setText(""+dayOfTheWeek+":"+dayNumber);
                 icon[accumulator].setImageResource(evaluateTheWeather(iconValue));
-                degrees[accumulator].setText(""+averageTemp+"°");
+                degrees[accumulator].setText("promedio: "+averageTemp+"°");
 
 
 
